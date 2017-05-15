@@ -1,0 +1,15 @@
+framework/BaseEntity.class
+framework/BaseElement.class
+steam/forms/InstallPage.class
+steam/forms/StartPage.class
+framework/Tab.class
+framework/BrowserFactory.class
+steam/tests/SteamTest.class
+framework/Menu.class
+steam/forms/ActionPage.class
+framework/FirefoxFactory.class
+steam/forms/DescriptionPage.class
+framework/Select.class
+framework/services/CommonFunctions.class
+steam/forms/SpecialsPage.class
+framework/ChromeFactory.class
