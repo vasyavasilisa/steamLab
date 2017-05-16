@@ -4,10 +4,10 @@
            failures="0"
            errors="0"
            skipped="0"
-           time="32.608">
+           time="24.113">
   <properties />
   
   
-            <testcase name="shouldWork" time="32.608" classname="steam.tests.SteamTest" />
+            <testcase name="shouldWork" time="24.113" classname="steam.tests.SteamTest" />
       
 </testsuite>

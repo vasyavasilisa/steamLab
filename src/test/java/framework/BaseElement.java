@@ -2,17 +2,45 @@ package framework;
 
 import org.openqa.selenium.*;
 
+import org.openqa.selenium.interactions.Actions;
+
 import java.util.List;
 
 /**
  * Created by v.demyanova on 5/15/17.
  */
-public  class BaseElement implements WebElement{
+public  class BaseElement implements WebElement {
 
+    /*WebElement webElement;*/
+    WebDriver driver;
+
+    public BaseElement() {
+
+    }
+
+    /*public WebDriver getDriver() {
+        return driver;
+    }*/
+
+    public BaseElement(WebDriver driver) {
+this.driver=driver;
+    }
+
+   /* public BaseElement(WebElement webElement,WebDriver driver) {
+        this.webElement = webElement;
+        this.driver=driver;
+    }*/
 
     @Override
     public List<WebElement> findElements(By by) {
-        return null;
+        List<WebElement> list = (driver.findElements(by));
+        return list;
+}
+
+
+    public List<WebElement> findElements(String by) {
+        List<WebElement> list = (driver.findElements(By.xpath(by)));
+        return list;
     }
 
     @Override
@@ -59,25 +87,19 @@ public  class BaseElement implements WebElement{
 
     @Override
     public String getText() {
-        return null;
+        return "hjhjhk";
     }
 
 
-    public List<WebElement> findElements(WebDriver driver,By discountLocator) {
-        try {
-            Thread.sleep(8000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-
-        List<WebElement> list = (driver.findElements(discountLocator));
-        return list;
-    }
 
     @Override
     public WebElement findElement(By by) {
-        return null;
+        return driver.findElement(by);
+    }
+
+    public WebElement findElement(String by) {
+        return driver.findElement(By.xpath(by));
     }
 
     @Override

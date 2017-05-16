@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Suite1" duration-ms="32628" started-at="2017-05-15T11:14:35Z" finished-at="2017-05-15T11:15:08Z">
+  <suite name="Suite1" duration-ms="24146" started-at="2017-05-16T17:42:11Z" finished-at="2017-05-16T17:42:35Z">
     <groups>
     </groups>
-    <test name="Onliner" duration-ms="32628" started-at="2017-05-15T11:14:35Z" finished-at="2017-05-15T11:15:08Z">
+    <test name="Onliner" duration-ms="24146" started-at="2017-05-16T17:42:11Z" finished-at="2017-05-16T17:42:35Z">
       <class name="steam.tests.SteamTest">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:steam.tests.SteamTest@604ed9f0]" name="setUp" is-config="true" duration-ms="5" started-at="2017-05-15T14:14:35Z" finished-at="2017-05-15T14:14:35Z">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:steam.tests.SteamTest@604ed9f0]" name="setUp" is-config="true" duration-ms="13" started-at="2017-05-16T20:42:11Z" finished-at="2017-05-16T20:42:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="shouldWork()[pri:0, instance:steam.tests.SteamTest@604ed9f0]" name="shouldWork" duration-ms="32608" started-at="2017-05-15T14:14:35Z" finished-at="2017-05-15T14:15:08Z">
+        <test-method status="PASS" signature="shouldWork()[pri:0, instance:steam.tests.SteamTest@604ed9f0]" name="shouldWork" duration-ms="24113" started-at="2017-05-16T20:42:11Z" finished-at="2017-05-16T20:42:35Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- shouldWork -->

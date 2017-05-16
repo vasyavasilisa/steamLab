@@ -2,6 +2,7 @@ package framework;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -10,17 +11,25 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class Tab extends BaseElement {
     WebDriver driver;
-    By specialsLocator;
+    WebElement tab;
+    //By specialsLocator;
 
-    public Tab(WebDriver driver, By specialsLocator) {
+    public Tab(WebDriver driver) {
         this.driver = driver;
-        this.specialsLocator = specialsLocator;
+
     }
+
+    public Tab(WebElement tab,WebDriver driver) {
+        this.tab=tab;
+        this.driver = driver;
+
+    }
+
 
     @Override
     public void click() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfElementLocated(specialsLocator));
-        driver.findElement(specialsLocator).click();
+       /* WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(specialsLocator));*/
+        tab.click();
     }
 }

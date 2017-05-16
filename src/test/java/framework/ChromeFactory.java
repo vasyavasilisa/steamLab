@@ -1,7 +1,9 @@
 package framework;
 
 import framework.services.CommonFunctions;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * Created by USER on 09.05.2017.
@@ -14,20 +16,28 @@ public class ChromeFactory extends BrowserFactory {
 
     private static final String DRIVER_LOCATION_KEY_LIN = "driver_chrome_location_lin";
 
-    private static final ChromeFactory instance = new ChromeFactory();
+    private static  ChromeFactory instance = null;
+    private static ChromeDriver driver;
 
-    public static synchronized ChromeFactory getInstance() {
-        return instance;
+    public static synchronized WebDriver getInstance() {
+        if (instance == null)
+            instance = new ChromeFactory();
+        if(driver==null) {
+            driver = new ChromeDriver(/*options*//*profile*/);
+        }
+        return driver;
+
+
     }
 
     private ChromeFactory() {
         CommonFunctions commonFunctions = new CommonFunctions();
         String osType = System.getProperty("os.name").toLowerCase();
         if(osType.indexOf( "win" ) >= 0){
-            System.setProperty(CHROME_DRIVER_NAME, commonFunctions.readProperties().getProperty(DRIVER_LOCATION_KEY_WIN));
+            System.setProperty(CHROME_DRIVER_NAME, commonFunctions.readProperties("brouser.properties").getProperty(DRIVER_LOCATION_KEY_WIN));
         }
         else if(osType.indexOf( "nix") >=0 || osType.indexOf( "nux") >=0) {
-            System.setProperty(CHROME_DRIVER_NAME, commonFunctions.readProperties().getProperty(DRIVER_LOCATION_KEY_LIN));
+            System.setProperty(CHROME_DRIVER_NAME, commonFunctions.readProperties("brouser.properties").getProperty(DRIVER_LOCATION_KEY_LIN));
         }
 
     }

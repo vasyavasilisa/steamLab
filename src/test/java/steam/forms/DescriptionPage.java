@@ -1,6 +1,9 @@
 package steam.forms;
 
 import com.google.common.base.Function;
+import framework.BaseElement;
+import framework.Button;
+import framework.Select;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,57 +20,87 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class DescriptionPage {
     WebDriver driver;
+    WebElement daySelect;
+    WebElement concreteDaySelect;
+    WebElement monthSelect;
+    WebElement concreteMonthSelect;
+    WebElement yearSelect;
+    WebElement concreteYearSelect;
+    WebElement buttonEnter;
+    WebElement buttonInstall;
     By ageMessageLocator = By.xpath("//h2[contains(text(),'Пожалуйста, введите дату вашего рождения')]");
-    By daySelectLocator = By.xpath("//select[@name='ageDay']");
-    By dayOptionLocator = By.xpath("//select[@name='ageDay']/option");
-    By monthSelectLocator = By.xpath("//select[@name='ageMonth']");
-    By monthOptionLocator = By.xpath("//select[@name='ageMonth']/option[@value='February']");
-    By yearSelectLocator = By.xpath("//select[@name='ageYear']");
-    By yearOptionLocator = By.xpath("//select[@name='ageYear']/option[@value='1992']");
-    By enterButtonLocator = By.xpath("//span[contains(text(),'Войти')]");
-    By installButtonLocator = By.xpath("//a[@class='header_installsteam_btn_content']");
-    By discountLocator = By.xpath("//div[@class='discount_pct']");
-    By finalPriceLocator = By.xpath("//div[@class='discount_final_price']");
+
+
+
+
+    String daySelectLocator ="//select[@name='ageDay']";
+    String dayOptionLocator = "//select[@name='ageDay']/option[@value='2']";
+    String monthSelectLocator = "//select[@name='ageMonth']";
+    String monthOptionLocator = "//select[@name='ageMonth']/option[@value='February']";
+    String yearSelectLocator = "//select[@name='ageYear']";
+    String yearOptionLocator = "//select[@name='ageYear']/option[@value='1999']";
+    String enterButtonLocator = "//span[contains(text(),'Войти')]";
+    String installButtonLocator = "//a[@class='header_installsteam_btn_content']";
+    String discountLocator = "//div[@class='discount_pct']";
+    String finalPriceLocator = "//div[@class='discount_final_price']";
+
 
     public DescriptionPage(WebDriver driver) {
         this.driver = driver;
     }
 
     public void chooseAgeIfExist() {
-      /*  WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfElementLocated(ageMessageLocator));*/
-      /*  Wait wait = new FluentWait(driver)
-                .withTimeout(30, SECONDS)
-                .pollingEvery(5, SECONDS)
-                .ignoring(TimeoutException.class)
-                .ignoring(NoSuchElementException.class);
 
-        WebElement foo =(WebElement) wait.until(new Function<WebDriver,WebElement>() {
-
-            public WebElement apply(WebDriver driver) {
-
-                return driver.findElement(ageMessageLocator);
-
-            }
-
-        });*/
 
           Wait<WebDriver> wait = new WebDriverWait(driver, 5).ignoring(java.util.NoSuchElementException.class, ElementNotVisibleException.class);
-
+        BaseElement baseElement = new BaseElement(driver);
          try{
              //if (driver.findElement(ageMessageLocator).isDisplayed()) {
               wait = new WebDriverWait(driver, 10);
-              wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(daySelectLocator));
-             WebElement elem1= driver.findElement(daySelectLocator);
-             elem1.click();
+              wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(daySelectLocator)));
+             daySelect= new Select(baseElement.findElement(daySelectLocator),driver);
+             daySelect.click();
+             /*WebElement elem1= driver.findElement(daySelectLocator);
+             elem1.click();*/
+             concreteDaySelect = new Select(baseElement.findElement(dayOptionLocator),driver);
+             concreteDaySelect.click();
+            /* wait = new WebDriverWait(driver, 10);
+             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(monthSelectLocator));*/
 
-            Actions action = new Actions(driver);
+          //   WebElement ele=driver.findElement(By.xpath("//div[@class='page_content']"));
+
+           /* Actions act = new Actions(driver);
+             act.moveToElement(ele).build().perform();
+             ele.click();*/
+            // act.doubleClick(e).build().perform();
+            wait = new WebDriverWait(driver, 10);
+             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(monthSelectLocator)));
+
+
+             monthSelect=new Select(baseElement.findElement(monthSelectLocator),driver);
+             monthSelect.click();
+
+             concreteMonthSelect=new Select(baseElement.findElement(monthOptionLocator),driver);
+             concreteMonthSelect.click();
+
+             yearSelect=new Select(baseElement.findElement(yearSelectLocator),driver);
+             yearSelect.click();
+             wait = new WebDriverWait(driver, 10);
+             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(yearSelectLocator)));
+             concreteYearSelect=new Select(baseElement.findElement(yearOptionLocator),driver);
+             concreteYearSelect.click();
+
+             buttonEnter = new Button(baseElement.findElement(enterButtonLocator),driver);
+             buttonEnter.click();
+
+            /* concreteDaySelect.click();
+             Actions action = new Actions(driver);
              WebElement elem = driver.findElements(dayOptionLocator).get(1);
              action.moveToElement(elem1).moveToElement(elem).build().perform();
             // driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
              elem.click();
            //  System.out.println(elem.getText());
-
+             action = new Actions(driver);
              driver.findElement(monthSelectLocator).click();
               elem = driver.findElement(monthOptionLocator);
              action.moveToElement(elem).build().perform();
@@ -76,9 +109,9 @@ public class DescriptionPage {
               driver.findElement(yearSelectLocator).click();
              elem = driver.findElement(yearOptionLocator);
              action.moveToElement(elem).build().perform();
-             elem.click();
+             elem.click();*/
 
-              driver.findElement(enterButtonLocator).click();
+             // driver.findElement(enterButtonLocator).click();
       //}
 
 
@@ -96,26 +129,30 @@ public class DescriptionPage {
 
     public boolean isSimilarPriceDiscount(List<String> list) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(discountLocator));
-        String discount = driver.findElement(discountLocator).getText();
-        String price = driver.findElement(finalPriceLocator).getText();
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(discountLocator)));
+        BaseElement baseElement = new BaseElement(driver);
+        String discount = baseElement.findElement(discountLocator).getText();
+        String price = baseElement.findElement(finalPriceLocator).getText();
         List<String> new_requisites = new ArrayList<>();
         new_requisites.add(discount);
         new_requisites.add(price.split(" ")[0]);
-        for(String l:list){
-            System.out.println(l);
+       /* for(String l:list){
+            //System.out.println(l);
         }
         for(String l1:new_requisites){
             System.out.println(l1);
-        }
+        }*/
         return list.equals(new_requisites);
 
 
     }
 
     public void clickOnInstall() {
+        BaseElement baseElement = new BaseElement(driver);
+
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(installButtonLocator));
-        driver.findElement(installButtonLocator).click();
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(installButtonLocator)));
+        buttonInstall= new Button(baseElement.findElement(installButtonLocator),driver);
+        buttonInstall.click();
     }
 }

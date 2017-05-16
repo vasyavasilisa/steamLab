@@ -1,5 +1,6 @@
 package steam.forms;
 
+import framework.BaseElement;
 import framework.Tab;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,7 +21,12 @@ public class ActionPage {
     }
 
     public void clickOnSpecials(){
-        tab=new Tab(driver,specialsLocator);
+        BaseElement baseElement = new BaseElement(driver);
+        //////////////////////////////////
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(specialsLocator));
+        ///////////////////////////////////////////
+        tab=new Tab(baseElement.findElement(specialsLocator),driver);
         tab.click();
 
     }
