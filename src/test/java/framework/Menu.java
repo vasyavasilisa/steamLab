@@ -19,7 +19,6 @@ import java.util.Properties;
 public class Menu extends BaseElement {
     BrowserFactory fact;
     By gamesMenuLocator = By.xpath("//div[@id='genre_tab']/span/a");
-    By actionLocator = By.xpath("//a[text()='Экшен']");
     WebDriver driver;
     WebElement menu;
 
@@ -45,11 +44,7 @@ public class Menu extends BaseElement {
 
     }
 
-    public Menu(WebDriver driver, By gamesMunuLocator, By actionLocator) {
-        this.driver = driver;
-        this.gamesMenuLocator = gamesMunuLocator;
-        this.actionLocator = actionLocator;
-    }
+
 
     public WebDriver getDriver() {
         CommonFunctions commonFunctions = new CommonFunctions();
@@ -63,26 +58,14 @@ public class Menu extends BaseElement {
     public void click() {
       menu.click();
 
-        // action.moveToElement(menu).build().perform();
-        // menu.click();
-       /* wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfElementLocated(actionLocator));*/
-        // driver.findElement(actionLocator).click();
-        /*WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfElementLocated(gamesMenuLocator));
-        WebElement webElement = driver.findElement(gamesMenuLocator);
-        Actions action = new Actions(driver);
-        action.moveToElement(webElement).build().perform();
-        wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfElementLocated(actionLocator));
-        driver.findElement(actionLocator).click();*/
+
 
     }
 
     public void moveTo() {
-        Actions action = new Actions(driver);
 
-       action.moveToElement(driver.findElement(gamesMenuLocator)).build().perform();
+        Actions action = new Actions(driver);
+       action.moveToElement(menu).build().perform();
 
 
 

@@ -1,5 +1,6 @@
 package steam.forms;
 
+import framework.BrowserFactory;
 import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,16 +18,15 @@ import java.util.Base64;
 /**
  * Created by v.demyanova on 5/15/17.
  */
-public class InstallPage {
+public class InstallPage extends BasePage{
     WebDriver driver;
-    By setupFileLocator = By.xpath("//span[text()='Установить Steam']");
+    String setupFileLocator = "//span[text()='Установить Steam']";
 
-    public InstallPage(WebDriver webDriver) {
-        this.driver = webDriver;
+    public InstallPage() {
+        this.driver = getDriver();
     }
     public void clickOnSetUpFile(){
-        WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(setupFileLocator));
+        BrowserFactory.waitElementsExplicide(setupFileLocator);
      //  driver.findElement(setupFileLocator).click();
        try {
             URL url = new URL("https://steamcdn-a.akamaihd.net/client/installer/steam.deb");

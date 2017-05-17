@@ -2,19 +2,23 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Suite1" duration-ms="24146" started-at="2017-05-16T17:42:11Z" finished-at="2017-05-16T17:42:35Z">
+  <suite name="Suite1" duration-ms="28087" started-at="2017-05-17T09:00:37Z" finished-at="2017-05-17T09:01:05Z">
     <groups>
     </groups>
-    <test name="Onliner" duration-ms="24146" started-at="2017-05-16T17:42:11Z" finished-at="2017-05-16T17:42:35Z">
+    <test name="Onliner" duration-ms="28087" started-at="2017-05-17T09:00:37Z" finished-at="2017-05-17T09:01:05Z">
       <class name="steam.tests.SteamTest">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:steam.tests.SteamTest@604ed9f0]" name="setUp" is-config="true" duration-ms="13" started-at="2017-05-16T20:42:11Z" finished-at="2017-05-16T20:42:11Z">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:steam.tests.SteamTest@5e3a8624]" name="setUp" is-config="true" duration-ms="12632" started-at="2017-05-17T12:00:37Z" finished-at="2017-05-17T12:00:50Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="shouldWork()[pri:0, instance:steam.tests.SteamTest@604ed9f0]" name="shouldWork" duration-ms="24113" started-at="2017-05-16T20:42:11Z" finished-at="2017-05-16T20:42:35Z">
+        <test-method status="PASS" signature="shouldWork()[pri:0, instance:steam.tests.SteamTest@5e3a8624]" name="shouldWork" duration-ms="15386" started-at="2017-05-17T12:00:50Z" finished-at="2017-05-17T12:01:05Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- shouldWork -->
+        <test-method status="PASS" signature="exit()[pri:0, instance:steam.tests.SteamTest@5e3a8624]" name="exit" is-config="true" duration-ms="49" started-at="2017-05-17T12:01:05Z" finished-at="2017-05-17T12:01:05Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- exit -->
       </class> <!-- steam.tests.SteamTest -->
     </test> <!-- Onliner -->
   </suite> <!-- Suite1 -->

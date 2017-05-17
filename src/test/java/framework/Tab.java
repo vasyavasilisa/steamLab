@@ -28,8 +28,7 @@ public class Tab extends BaseElement {
 
     @Override
     public void click() {
-       /* WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfElementLocated(specialsLocator));*/
+
         tab.click();
     }
 }

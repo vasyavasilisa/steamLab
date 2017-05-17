@@ -1,24 +1,21 @@
 package steam.forms;
 
-import com.google.common.base.Function;
+
 import framework.BaseElement;
+import framework.BrowserFactory;
 import framework.Button;
 import framework.Select;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
+
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.*;
 import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 
-public class DescriptionPage {
+
+public class DescriptionPage extends BasePage{
     WebDriver driver;
     WebElement daySelect;
     WebElement concreteDaySelect;
@@ -41,12 +38,12 @@ public class DescriptionPage {
     String yearOptionLocator = "//select[@name='ageYear']/option[@value='1999']";
     String enterButtonLocator = "//span[contains(text(),'Войти')]";
     String installButtonLocator = "//a[@class='header_installsteam_btn_content']";
-    String discountLocator = "//div[@class='discount_pct']";
+    String discountLocator2 = "//div[@class='discount_pct']";
     String finalPriceLocator = "//div[@class='discount_final_price']";
 
 
-    public DescriptionPage(WebDriver driver) {
-        this.driver = driver;
+    public DescriptionPage() {
+        this.driver = getDriver();
     }
 
     public void chooseAgeIfExist() {
@@ -56,8 +53,9 @@ public class DescriptionPage {
         BaseElement baseElement = new BaseElement(driver);
          try{
              //if (driver.findElement(ageMessageLocator).isDisplayed()) {
-              wait = new WebDriverWait(driver, 10);
-              wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(daySelectLocator)));
+              /*wait = new WebDriverWait(driver, 10);
+              wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(daySelectLocator)));*/
+              BrowserFactory.waitElementsExplicide(daySelectLocator);
              daySelect= new Select(baseElement.findElement(daySelectLocator),driver);
              daySelect.click();
              /*WebElement elem1= driver.findElement(daySelectLocator);
@@ -73,8 +71,7 @@ public class DescriptionPage {
              act.moveToElement(ele).build().perform();
              ele.click();*/
             // act.doubleClick(e).build().perform();
-            wait = new WebDriverWait(driver, 10);
-             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(monthSelectLocator)));
+             BrowserFactory.waitElementsExplicide(monthSelectLocator);
 
 
              monthSelect=new Select(baseElement.findElement(monthSelectLocator),driver);
@@ -85,8 +82,7 @@ public class DescriptionPage {
 
              yearSelect=new Select(baseElement.findElement(yearSelectLocator),driver);
              yearSelect.click();
-             wait = new WebDriverWait(driver, 10);
-             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(yearSelectLocator)));
+             BrowserFactory.waitElementsExplicide(yearSelectLocator);
              concreteYearSelect=new Select(baseElement.findElement(yearOptionLocator),driver);
              concreteYearSelect.click();
 
@@ -128,10 +124,9 @@ public class DescriptionPage {
     }
 
     public boolean isSimilarPriceDiscount(List<String> list) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(discountLocator)));
+        BrowserFactory.waitElementsExplicide(discountLocator2);
         BaseElement baseElement = new BaseElement(driver);
-        String discount = baseElement.findElement(discountLocator).getText();
+        String discount = baseElement.findElement(discountLocator2).getText();
         String price = baseElement.findElement(finalPriceLocator).getText();
         List<String> new_requisites = new ArrayList<>();
         new_requisites.add(discount);
@@ -150,8 +145,8 @@ public class DescriptionPage {
     public void clickOnInstall() {
         BaseElement baseElement = new BaseElement(driver);
 
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(installButtonLocator)));
+        //WebDriverWait wait = new WebDriverWait(driver, 10);
+        BrowserFactory.waitElementsExplicide(installButtonLocator);
         buttonInstall= new Button(baseElement.findElement(installButtonLocator),driver);
         buttonInstall.click();
     }

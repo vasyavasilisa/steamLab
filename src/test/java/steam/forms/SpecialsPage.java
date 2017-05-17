@@ -2,6 +2,7 @@ package steam.forms;
 
 import com.google.common.base.Function;
 import framework.BaseElement;
+import framework.BrowserFactory;
 import framework.Image;
 import framework.services.CommonFunctions;
 import org.openqa.selenium.*;
@@ -18,7 +19,7 @@ import static java.time.zone.ZoneRulesProvider.refresh;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 
-public class SpecialsPage {
+public class SpecialsPage extends BasePage{
     WebDriver driver;
     WebElement imageWithMaxDiscount;
 
@@ -32,12 +33,14 @@ public class SpecialsPage {
 
     Long started;
 
-    public SpecialsPage(WebDriver driver) {
-        this.driver = driver;
+    public SpecialsPage() {
+        this.driver = getDriver();
     }
 
     public List getDiscount() {
-       WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        BrowserFactory.waitJavascript();
+       /*WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(discountLocator)));
         WebDriverWait w3 = new WebDriverWait(driver, Long.parseLong("1000"));
 
@@ -56,6 +59,8 @@ public class SpecialsPage {
         } catch (Exception e) {
             // Logger.getInstance().warn(getLoc("loc.browser.page.timeout"));
         }
+        */
+
         //= System.currentTimeMillis();
         /*WebDriverWait wait1 = new WebDriverWait(driver, Long.parseLong("1000"));
         try {
@@ -80,8 +85,8 @@ public class SpecialsPage {
             refresh();
            // waitForPageToLoad();
         }*/
-
-       WebDriverWait w2 = new WebDriverWait(driver, Long.parseLong("1000"));
+        BrowserFactory.waitJavascript();
+       /*WebDriverWait w2 = new WebDriverWait(driver, Long.parseLong("1000"));
 
         try {
             w2.until(d -> {
@@ -97,7 +102,7 @@ public class SpecialsPage {
             });
         } catch (Exception e) {
            // Logger.getInstance().warn(getLoc("loc.browser.page.timeout"));
-        }
+        }*/
 // Logger.getInstance().info("waitForPageToLoad ended");
 
        /* try {
@@ -117,7 +122,8 @@ public class SpecialsPage {
         System.out.println(list.size());
 
         System.out.println("ioioipoipoipoipo");
-        WebDriverWait w = new WebDriverWait(driver, Long.parseLong("1000"));
+        BrowserFactory.waitJavascript();
+     /*   WebDriverWait w = new WebDriverWait(driver, Long.parseLong("1000"));
 
         try {
             w.until(d -> {
@@ -133,7 +139,7 @@ public class SpecialsPage {
             });
         } catch (Exception e) {
             // Logger.getInstance().warn(getLoc("loc.browser.page.timeout"));
-        }
+        }*/
         System.out.println("ioioipoipoipoipo32312");
          int  maxInd= commonFunctions.getIndMaxDiscount(discounts);
         System.out.println("ioioipoipoipoipo");
