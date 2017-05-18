@@ -1,6 +1,8 @@
 package framework;
 
+import framework.services.CommonFunctions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
@@ -9,9 +11,11 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import static java.time.zone.ZoneRulesProvider.refresh;
@@ -19,8 +23,11 @@ import static java.time.zone.ZoneRulesProvider.refresh;
 
 public abstract class BrowserFactory {
 
+    private static final String MAIN_PROPERTY_PATH="brouser.properties";
+
     public abstract WebDriver getDriver();
-    public static WebDriver driver;
+    private static WebDriver driver;
+    private static Properties properties;
     static  Long started;
 
 public static WebDriver getMyDriver(String type){
@@ -28,33 +35,33 @@ public static WebDriver getMyDriver(String type){
         case "chrome": {
 
             driver=ChromeFactory.getInstance();
+            initProperties();
             return driver;
 
         }
         case "firefox": {
 
             driver=FirefoxFactory.getInstance();
+            initProperties();
             return driver;
+
         }
+
     }
+
+
+
     throw new RuntimeException();
 }
 
 
-    public static BrowserFactory getFactory(String type) {
-        switch (type) {
-           /* case "chrome": {
-                return ChromeFactory.getInstance();
-            }*/
-          /*  case "firefox": {
-                return FirefoxFactory.getInstance();
-            }*/
-        }
-        throw new RuntimeException();
-    }
+public static void initProperties(){
+    CommonFunctions commonFunctions = new CommonFunctions();
+    properties = commonFunctions.readProperties(MAIN_PROPERTY_PATH);
+}
 
     public static void waitJavascript(){
-        WebDriverWait wait1 = new WebDriverWait(driver, Long.parseLong("1000"));
+        WebDriverWait wait1 = new WebDriverWait(driver, getTimeForLoadPage());
         try {
             wait1.until(new ExpectedCondition<Boolean>() {
                 public Boolean apply(final WebDriver d) {
@@ -64,7 +71,7 @@ public static WebDriver getMyDriver(String type){
                     Object result = ((JavascriptExecutor) d).executeScript("return document['readyState'] ? 'complete' == document.readyState : true");
                     if (result != null && result instanceof Boolean && (Boolean) result) {
                         long now = System.currentTimeMillis();
-                        if (now - started > Long.parseLong("1000")) {
+                        if (now - started > getTimeForLoadPage()) {
                             return true;
                         }else {
                             started = System.currentTimeMillis();
@@ -75,23 +82,28 @@ public static WebDriver getMyDriver(String type){
             });
         } catch (Exception e) {
             refresh();
-            //waitJavascript();
 
         }
 
     }
 
+    public static void waitWithIgnoring(){
+        Wait<WebDriver> wait = new WebDriverWait(driver, getTimeForLoadElement())
+                .ignoring(java.util.NoSuchElementException.class, ElementNotVisibleException.class);
+
+    }
+
     public static void waitImplicitly(){
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(getTimeForLoadElement(), TimeUnit.SECONDS);
     }
 
     public static void waitElementExplicide(String locator){
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, getTimeForLoadElement());
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
     }
 
     public static void waitElementsExplicide(String locator){
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, getTimeForLoadElement());
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(locator)));
     }
 
@@ -103,6 +115,18 @@ public static WebDriver getMyDriver(String type){
 
     public static void navigateUrl(String url){
         driver.navigate().to(url);
+
+    }
+
+
+
+    public static Long getTimeForLoadPage(){
+        return Long.parseLong(properties.getProperty("timeoutJs"));
+
+    }
+
+    public static Long getTimeForLoadElement(){
+        return Long.parseLong(properties.getProperty("timeout"));
 
     }
 

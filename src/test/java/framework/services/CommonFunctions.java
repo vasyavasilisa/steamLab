@@ -1,24 +1,14 @@
 package framework.services;
 
 import org.openqa.selenium.WebElement;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by USER on 10.05.2017.
- */
+
 public class CommonFunctions {
 
-    private static final String BROWSER_PROPERTIES_PATH="brouser.properties";
 
 
     public Properties readProperties(String path){
@@ -66,6 +56,18 @@ public class CommonFunctions {
 
         return maxInd;
     }
+
+    public boolean isFullDownLoad(String filePath,long size){
+        File f = new File(filePath);
+        if (f.exists()) {
+            return f.length()==size;
+        } else {
+            return false;
+        }
+
+    }
+
+
 
 
 }
