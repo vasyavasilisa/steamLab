@@ -31,7 +31,7 @@ public class Select extends BaseElement {
        Actions action = new Actions(driver);
         action.moveToElement(select).build().perform();
         select.click();
-        System.out.println(select.getText());
+       // System.out.println(select.getText());
 
     }
 }

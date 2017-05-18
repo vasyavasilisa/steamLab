@@ -14,7 +14,7 @@ public class BasePage{
 
     private static final String MAIN_PROPERTY_PATH="brouser.properties";
 
-    private static final String RULOCATOR_PROPERTY_PATH="ru_locators.properties";
+    private static final String RULOCATOR_PROPERTY_PATH= "templates.properties";
 
     private  static Properties properties;
     private  static Properties locatorProperties;
@@ -40,7 +40,7 @@ public class BasePage{
 
 
     public void exit(){
-        BrowserFactory.exit();
+        //BrowserFactory.exit();
     }
 
     public WebDriver getDriver() {
@@ -67,5 +67,13 @@ public class BasePage{
 
     public static Properties getProperties() {
         return properties;
+    }
+
+    public void setLocatorProperties(Properties properties) {
+        locatorProperties = properties;
+    }
+
+    public Properties getLocatorProperties() {
+        return locatorProperties;
     }
 }

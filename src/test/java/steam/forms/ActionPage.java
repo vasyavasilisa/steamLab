@@ -6,11 +6,12 @@ import framework.Tab;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.Properties;
 
 
 public class ActionPage extends BasePage{
     WebDriver driver;
-    String specialsLocator = "//div[@id='tab_select_Discounts']/div";
+    String specialsLocatorKey = "specialsLocator";
     WebElement tab;
 
     public ActionPage() {
@@ -18,9 +19,10 @@ public class ActionPage extends BasePage{
     }
 
     public void clickOnSpecials(){
+        Properties locatorProperties=getLocatorProperties();
         BaseElement baseElement = new BaseElement(driver);
-        BrowserFactory.waitElementExplicide(specialsLocator);
-        tab=new Tab(baseElement.findElement(specialsLocator),driver);
+        BrowserFactory.waitElementExplicide(locatorProperties.getProperty(specialsLocatorKey));
+        tab=new Tab(baseElement.findElement(locatorProperties.getProperty(specialsLocatorKey)),driver);
         tab.click();
 
     }

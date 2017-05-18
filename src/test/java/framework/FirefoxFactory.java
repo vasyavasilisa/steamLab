@@ -31,18 +31,18 @@ private static FirefoxDriver driver;
     public static synchronized WebDriver getInstance() {
         if (instance == null)
             instance = new FirefoxFactory();
-        /*File pathToBinary = new File("C:\\Users\\USER\\Desktop\\FirefoxPortable\\App\\Firefox\\firefox.exe");
+        File pathToBinary = new File("C:\\Users\\USER\\Desktop\\FirefoxPortable\\App\\Firefox\\firefox.exe");
         FirefoxBinary ffBinary = new FirefoxBinary(pathToBinary);
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         firefoxProfile.setPreference("webdriver.load.strategy","unstable");
-        FirefoxOptions options= new FirefoxOptions().setBinary(ffBinary).setProfile(firefoxProfile);*/
+        FirefoxOptions options= new FirefoxOptions().setBinary(ffBinary).setProfile(firefoxProfile);
    /* FirefoxProfile profile = new FirefoxProfile();
     profile.setPreference("browser.download.folderList", 2);
     profile.setPreference("browser.download.manager.showWhenStarting", false);
     profile.setPreference("browser.download.dir", "/src/test/resources");
     profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/deb");*/
         if(driver==null) {
-            driver = new FirefoxDriver(/*options*//*profile*/);
+            driver = new FirefoxDriver(options/*profile*/);
         }
         return driver;
     }

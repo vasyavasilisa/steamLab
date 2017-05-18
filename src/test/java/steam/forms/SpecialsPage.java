@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -19,17 +20,14 @@ import static java.time.zone.ZoneRulesProvider.refresh;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 
-public class SpecialsPage extends BasePage{
+public class SpecialsPage extends BasePage {
     WebDriver driver;
     WebElement imageWithMaxDiscount;
 
-    String discountLocator = "//div[@class = 'tab_content_ctn large']/div[@id = 'tab_Discounts_content']" +
-            "//a//div[@class='discount_pct']";
-    String imageLocator = "//div[@class = 'tab_content_ctn large']/div[@id = 'tab_Discounts_content']" +
-            "//a//img";
+    String discountLocatorKey = "discountLocator";
+    String imageLocatorKey = "imageLocator";
 
-    String priceLabelLocator = "//div[@class = 'tab_content_ctn large']/div[@id = 'tab_Discounts_content']//a//" +
-            "div[@class='discount_final_price']";
+    String priceLabelLocatorKey = "priceLabelLocator";
 
     Long started;
 
@@ -38,7 +36,8 @@ public class SpecialsPage extends BasePage{
     }
 
     public List getDiscount() {
-
+        Properties locatorProperties = getLocatorProperties();
+       // BrowserFactory.waitElementsExplicide(locatorProperties.getProperty(discountLocatorKey));
         BrowserFactory.waitJavascript();
        /*WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(discountLocator)));
@@ -115,9 +114,9 @@ public class SpecialsPage extends BasePage{
         wdWait.ignoring(InvalidSelectorException.class, StaleElementReferenceException.class);
         wdWait.until(ExpectedConditions.visibilityOf(driver.findElement(discountLocator)));*/
 
-        BaseElement baseElement=new BaseElement(driver);
+        BaseElement baseElement = new BaseElement(driver);
         CommonFunctions commonFunctions = new CommonFunctions();
-        List<WebElement> list = baseElement.findElements(discountLocator);
+        List<WebElement> list = baseElement.findElements(locatorProperties.getProperty(discountLocatorKey));
         List<Integer> discounts = commonFunctions.getListOfDiscounts(list);
         System.out.println(list.size());
 
@@ -140,16 +139,16 @@ public class SpecialsPage extends BasePage{
         } catch (Exception e) {
             // Logger.getInstance().warn(getLoc("loc.browser.page.timeout"));
         }*/
-        System.out.println("ioioipoipoipoipo32312");
-         int  maxInd= commonFunctions.getIndMaxDiscount(discounts);
-        System.out.println("ioioipoipoipoipo");
+        //System.out.println("ioioipoipoipoipo32312");
+        int maxInd = commonFunctions.getIndMaxDiscount(discounts);
+        // System.out.println("ioioipoipoipoipo");
         System.out.println(maxInd);
-        List<String> ldiscount_price= new ArrayList<>();
+        List<String> ldiscount_price = new ArrayList<>();
 
-       ldiscount_price.add(baseElement.findElements(discountLocator).get( maxInd).getText());
-        ldiscount_price.add(baseElement.findElements(priceLabelLocator).get( maxInd).getText());
+        ldiscount_price.add(baseElement.findElements(locatorProperties.getProperty(discountLocatorKey)).get(0).getText());
+        ldiscount_price.add(baseElement.findElements(locatorProperties.getProperty(priceLabelLocatorKey)).get(0).getText());
 
-       //System.out.println(driver.findElement(priceLabelLocator).getText());
+        //System.out.println(driver.findElement(priceLabelLocator).getText());
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
        /* w1 = new WebDriverWait(driver, Long.parseLong("1000"));
 
@@ -168,7 +167,7 @@ public class SpecialsPage extends BasePage{
         } catch (Exception e) {
             // Logger.getInstance().warn(getLoc("loc.browser.page.timeout"));
         }*/
-        imageWithMaxDiscount = new Image(baseElement.findElements(imageLocator).get( maxInd),driver);
+        imageWithMaxDiscount = new Image(baseElement.findElements(locatorProperties.getProperty(imageLocatorKey)).get(0), driver);
        /*wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(discountLocator));*/
         imageWithMaxDiscount.click();

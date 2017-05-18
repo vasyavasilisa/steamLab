@@ -21,15 +21,17 @@ import java.util.Base64;
 public class InstallPage extends BasePage{
     WebDriver driver;
     String setupFileLocator = "//span[text()='Установить Steam']";
+   /* File f = new File("имя_файла");
+    long len = f.length();*/
 
     public InstallPage() {
         this.driver = getDriver();
     }
     public void clickOnSetUpFile(){
-        BrowserFactory.waitElementsExplicide(setupFileLocator);
+       // BrowserFactory.waitElementsExplicide(setupFileLocator);
      //  driver.findElement(setupFileLocator).click();
        try {
-            URL url = new URL("https://steamcdn-a.akamaihd.net/client/installer/steam.deb");
+            URL url = new URL("https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe");
 
             String loginAndPassword = "login" + ":" + "password";
 
@@ -43,7 +45,7 @@ public class InstallPage extends BasePage{
             connection.setRequestProperty("Authorization", "Basic " + encoding);
 
             InputStream content = (InputStream) connection.getInputStream();
-            File file = new File("src/test/resources/steam.deb");
+            File file = new File("src/test/resources/steam.exe");
             OutputStream out = new FileOutputStream(file);
             IOUtils.copy(content, out);
             content.close();

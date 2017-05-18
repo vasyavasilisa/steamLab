@@ -5,17 +5,19 @@ import framework.BaseElement;
 import framework.BrowserFactory;
 import framework.Button;
 import framework.Select;
+import framework.services.CommonFunctions;
 import org.openqa.selenium.*;
 
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.NoSuchElementException;
 
 
-
-public class DescriptionPage extends BasePage{
+public class DescriptionPage extends BasePage {
     WebDriver driver;
     WebElement daySelect;
     WebElement concreteDaySelect;
@@ -25,21 +27,21 @@ public class DescriptionPage extends BasePage{
     WebElement concreteYearSelect;
     WebElement buttonEnter;
     WebElement buttonInstall;
-    By ageMessageLocator = By.xpath("//h2[contains(text(),'Пожалуйста, введите дату вашего рождения')]");
+    //  By ageMessageLocator = By.xpath("//h2[contains(text(),'Пожалуйста, введите дату вашего рождения')]");
 
 
+    String daySelectLocatorKey = "daySelectLocator";
+    String dayOptionLocatorKey = "dayOptionLocator";
+    String monthSelectLocatorKey = "monthSelectLocator";
+    String monthOptionLocatorKey = "monthOptionLocator";
+    String yearSelectLocatorKey = "yearSelectLocator";
+    String yearOptionLocatorKey = "yearOptionLocator";
+    String enterButtonLocatorKey = "enterButtonLocator";
+    String installButtonLocatorKey = "installButtonLocator";
+    String discountLocator2Key = "discountLocator2";
+    String finalPriceLocatorKey = "finalPriceLocator";
 
-
-    String daySelectLocator ="//select[@name='ageDay']";
-    String dayOptionLocator = "//select[@name='ageDay']/option[@value='2']";
-    String monthSelectLocator = "//select[@name='ageMonth']";
-    String monthOptionLocator = "//select[@name='ageMonth']/option[@value='February']";
-    String yearSelectLocator = "//select[@name='ageYear']";
-    String yearOptionLocator = "//select[@name='ageYear']/option[@value='1999']";
-    String enterButtonLocator = "//span[contains(text(),'Войти')]";
-    String installButtonLocator = "//a[@class='header_installsteam_btn_content']";
-    String discountLocator2 = "//div[@class='discount_pct']";
-    String finalPriceLocator = "//div[@class='discount_final_price']";
+    private static final String TEXT_LOCATORS_PATH = "%s_text.properties";
 
 
     public DescriptionPage() {
@@ -48,86 +50,86 @@ public class DescriptionPage extends BasePage{
 
     public void chooseAgeIfExist() {
 
-
-          Wait<WebDriver> wait = new WebDriverWait(driver, 5).ignoring(java.util.NoSuchElementException.class, ElementNotVisibleException.class);
+        Properties locatorProperties = getLocatorProperties();
+        Wait<WebDriver> wait = new WebDriverWait(driver, 5).ignoring(java.util.NoSuchElementException.class, ElementNotVisibleException.class);
         BaseElement baseElement = new BaseElement(driver);
-         try{
-             //if (driver.findElement(ageMessageLocator).isDisplayed()) {
+        try {
+            //if (driver.findElement(ageMessageLocator).isDisplayed()) {
               /*wait = new WebDriverWait(driver, 10);
               wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(daySelectLocator)));*/
-              BrowserFactory.waitElementsExplicide(daySelectLocator);
-             daySelect= new Select(baseElement.findElement(daySelectLocator),driver);
-             daySelect.click();
+            BrowserFactory.waitElementsExplicide(locatorProperties.getProperty(daySelectLocatorKey));
+            daySelect = new Select(baseElement.findElement(locatorProperties.getProperty(daySelectLocatorKey)), driver);
+            daySelect.click();
+            daySelect.click();
              /*WebElement elem1= driver.findElement(daySelectLocator);
              elem1.click();*/
-             concreteDaySelect = new Select(baseElement.findElement(dayOptionLocator),driver);
-             concreteDaySelect.click();
+            //BrowserFactory.waitImplicitly();
+            concreteDaySelect = new Select(baseElement.findElement(locatorProperties.getProperty(dayOptionLocatorKey)), driver);
+            concreteDaySelect.click();
+
             /* wait = new WebDriverWait(driver, 10);
              wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(monthSelectLocator));*/
 
-          //   WebElement ele=driver.findElement(By.xpath("//div[@class='page_content']"));
+            //   WebElement ele=driver.findElement(By.xpath("//div[@class='page_content']"));
 
            /* Actions act = new Actions(driver);
              act.moveToElement(ele).build().perform();
              ele.click();*/
             // act.doubleClick(e).build().perform();
-             BrowserFactory.waitElementsExplicide(monthSelectLocator);
+           BrowserFactory.waitElementsExplicide(locatorProperties.getProperty(monthSelectLocatorKey));
 
 
-             monthSelect=new Select(baseElement.findElement(monthSelectLocator),driver);
-             monthSelect.click();
+            monthSelect = new Select(baseElement.findElement(locatorProperties.getProperty(monthSelectLocatorKey)), driver);
+            monthSelect.click();
+            monthSelect.click();
 
-             concreteMonthSelect=new Select(baseElement.findElement(monthOptionLocator),driver);
-             concreteMonthSelect.click();
-
-             yearSelect=new Select(baseElement.findElement(yearSelectLocator),driver);
-             yearSelect.click();
-             BrowserFactory.waitElementsExplicide(yearSelectLocator);
-             concreteYearSelect=new Select(baseElement.findElement(yearOptionLocator),driver);
-             concreteYearSelect.click();
-
-             buttonEnter = new Button(baseElement.findElement(enterButtonLocator),driver);
-             buttonEnter.click();
-
-            /* concreteDaySelect.click();
-             Actions action = new Actions(driver);
-             WebElement elem = driver.findElements(dayOptionLocator).get(1);
-             action.moveToElement(elem1).moveToElement(elem).build().perform();
-            // driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-             elem.click();
-           //  System.out.println(elem.getText());
-             action = new Actions(driver);
-             driver.findElement(monthSelectLocator).click();
-              elem = driver.findElement(monthOptionLocator);
-             action.moveToElement(elem).build().perform();
-             elem.click();
-
-              driver.findElement(yearSelectLocator).click();
-             elem = driver.findElement(yearOptionLocator);
-             action.moveToElement(elem).build().perform();
-             elem.click();*/
-
-             // driver.findElement(enterButtonLocator).click();
-      //}
+            concreteMonthSelect = new Select(baseElement.findElement(locatorProperties.getProperty(monthOptionLocatorKey)), driver);
+            concreteMonthSelect.click();
 
 
-        }
+            yearSelect = new Select(baseElement.findElement(locatorProperties.getProperty(yearSelectLocatorKey)), driver);
+            yearSelect.click();
+            yearSelect.click();
 
-         catch(TimeoutException e){
+            BrowserFactory.waitElementsExplicide(locatorProperties.getProperty(yearSelectLocatorKey));
+            concreteYearSelect = new Select(baseElement.findElement(locatorProperties.getProperty(yearOptionLocatorKey)), driver);
+            concreteYearSelect.click();
+            CommonFunctions commonFunctions= new CommonFunctions();
+            String lang=getProperties().getProperty("language");
+            System.out.println(lang);
+            String nameFile=String.format(TEXT_LOCATORS_PATH,lang);
+            System.out.println(nameFile);
+            String prop=new String (commonFunctions.readProperties(nameFile).getProperty("enterButton"));
+            System.out.println(prop);
+            prop=new String (prop.getBytes("ISO-8859-1"), "UTF-8");
+String locator=new String(String.format(locatorProperties.getProperty("enterButtonLocator"),prop));
+            //String str = new String(locatorProperties.getProperty(enterButtonLocatorKey).getBytes("ISO-8859-1"), "UTF-8");
+System.out.println(locator);
+            buttonEnter = new Button(baseElement.findElement(locator), driver);
+            buttonEnter.click();
 
-         }
 
-        catch(NoSuchElementException e){
 
+            // driver.findElement(enterButtonLocator).click();
+            //}
+
+
+        } catch (TimeoutException e) {
+
+        } catch (NoSuchElementException e) {
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
     }
 
     public boolean isSimilarPriceDiscount(List<String> list) {
-        BrowserFactory.waitElementsExplicide(discountLocator2);
+        Properties locatorProperties = getLocatorProperties();
+        BrowserFactory.waitElementsExplicide(locatorProperties.getProperty(discountLocator2Key));
         BaseElement baseElement = new BaseElement(driver);
-        String discount = baseElement.findElement(discountLocator2).getText();
-        String price = baseElement.findElement(finalPriceLocator).getText();
+        String discount = baseElement.findElement(locatorProperties.getProperty(discountLocator2Key)).getText();
+        String price = baseElement.findElement(locatorProperties.getProperty(finalPriceLocatorKey)).getText();
         List<String> new_requisites = new ArrayList<>();
         new_requisites.add(discount);
         new_requisites.add(price.split(" ")[0]);
@@ -142,12 +144,14 @@ public class DescriptionPage extends BasePage{
 
     }
 
-    public void clickOnInstall() {
+    public void clickOnInstall() throws UnsupportedEncodingException {
         BaseElement baseElement = new BaseElement(driver);
-
+        Properties locatorProperties = getLocatorProperties();
         //WebDriverWait wait = new WebDriverWait(driver, 10);
-        BrowserFactory.waitElementsExplicide(installButtonLocator);
-        buttonInstall= new Button(baseElement.findElement(installButtonLocator),driver);
+        BrowserFactory.waitElementsExplicide(locatorProperties.getProperty(installButtonLocatorKey));
+        String str = new String(locatorProperties.getProperty(installButtonLocatorKey));
+
+        buttonInstall = new Button(baseElement.findElement(str), driver);
         buttonInstall.click();
     }
 }

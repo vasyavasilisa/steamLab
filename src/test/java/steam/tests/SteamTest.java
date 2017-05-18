@@ -3,8 +3,6 @@ package steam.tests;
 import framework.BrowserFactory;
 import framework.Menu;
 import framework.services.CommonFunctions;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
@@ -12,6 +10,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import steam.forms.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Properties;
 
@@ -19,17 +18,17 @@ import java.util.Properties;
  * Created by USER on 14.05.2017.
  */
 public class SteamTest {
-WebDriver driver;
+    WebDriver driver;
 
     @BeforeTest
     public void setUp() {
-       // CommonFunctions commonFunctions = new CommonFunctions();
+        // CommonFunctions commonFunctions = new CommonFunctions();
         BasePage basePage = new BasePage();
         Properties properties = basePage.initProperties();
 
         String br = properties.getProperty("brouser_type");
         //BrowserFactory fact=BrowserFactory.getFactory(br);
-         driver = BrowserFactory.getMyDriver(br);
+        driver = BrowserFactory.getMyDriver(br);
         String mainPage = properties.getProperty("main_page_url");
         basePage.setDriver(driver);
         basePage.maximaseWindow();
@@ -37,12 +36,15 @@ WebDriver driver;
     }
 
     @Test
-    public void shouldWork() {
-
+    public void shouldWork() throws UnsupportedEncodingException {
+        CommonFunctions c = new CommonFunctions();
+        String str1 = c.readProperties("templates.properties").getProperty("actionLocator");
+        System.out.println(new String(str1.getBytes("ISO-8859-1"), "UTF-8"));
 
         StartPage startPage = new StartPage();
         startPage.changeLanguage();
-        startPage.clickOnActions();
+        startPage.moveToGamesMenu();
+        startPage.clickOnActionSubmenu(Menu.ACTION);
 
         ActionPage actionPage = new ActionPage();
         actionPage.clickOnSpecials();
@@ -57,14 +59,10 @@ WebDriver driver;
         InstallPage installPage = new InstallPage();
         installPage.clickOnSetUpFile();
 
-       /* WebDriver driver1 = BrowserFactory.getMyDriver(br);
-        driver.manage().window().maximize();
-        driver.navigate().to("https://www.onliner.by/");*/
-
     }
 
     @AfterTest
-    public void exit(){
+    public void exit() {
         BasePage basePage = new BasePage(driver);
         basePage.exit();
     }

@@ -75,6 +75,7 @@ public static WebDriver getMyDriver(String type){
             });
         } catch (Exception e) {
             refresh();
+            //waitJavascript();
 
         }
 
