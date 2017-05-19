@@ -10,12 +10,18 @@ import org.openqa.selenium.interactions.Actions;
 public class Select extends BaseElement {
 
 
-    WebDriver driver;
     WebElement select;
 
-    public  Select(WebElement select,WebDriver driver){
+    public Select(By by) {
+        this.select= findElement(by);
+
+    }
+
+
+
+
+    public Select(WebElement select) {
         this.select = select;
-        this.driver = driver;
 
     }
 
@@ -23,10 +29,27 @@ public class Select extends BaseElement {
     @Override
     public void click() {
 
-       Actions action = new Actions(driver);
+        Actions action = new Actions(super.getDriver());
         action.moveToElement(select).build().perform();
         select.click();
 
 
+    }
+
+    @Override
+    public String getText(){
+        return select.getText();
+    }
+
+
+    @Override
+    public void moveTo() {
+        Actions action = new Actions(super.getDriver());
+        action.moveToElement(select).build().perform();
+    }
+
+    @Override
+    public String getAttribute(String str) {
+        return null;
     }
 }

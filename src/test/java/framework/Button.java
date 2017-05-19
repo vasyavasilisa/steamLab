@@ -1,28 +1,44 @@
 package framework;
 
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
-/**
- * Created by v.demyanova on 5/16/17.
- */
+
 public class Button extends BaseElement {
 
     WebElement button;
-    WebDriver driver;
 
-    public Button(){
+    public Button() {
 
     }
 
-    public Button(WebElement button,WebDriver driver){
-        this.button=button;
-        this.driver=driver;
+    public Button(By by) {
+        this.button = findElement(by);
+
+    }
+
+    public Button(WebElement button) {
+        this.button = button;
 
     }
 
     @Override
     public void click() {
         button.click();
+    }
+
+    public String getAttribute(String name) {
+        return button.getAttribute(name);
+    }
+
+    @Override
+    public String getText() {
+        return null;
+    }
+
+    @Override
+    public void moveTo() {
+
     }
 }

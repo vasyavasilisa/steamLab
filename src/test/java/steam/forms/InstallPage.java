@@ -2,40 +2,36 @@ package steam.forms;
 
 import framework.BaseElement;
 
+import framework.Button;
 import framework.services.CommonFunctions;
 import framework.services.HttpUtils;
-
-
-import org.openqa.selenium.WebDriver;
-
-
+import org.openqa.selenium.By;
 
 
 import java.util.Properties;
 
-/**
- * Created by v.demyanova on 5/15/17.
- */
-public class InstallPage extends BasePage{
-    WebDriver driver;
-    String locator ="//div[@id='about_greeting_ctn']//*//a[@id='about_install_steam_link']";
 
+public class InstallPage extends BasePage {
 
+    private static final String LOCATOR = "//div[@id='about_greeting_ctn']//*//a[@id='about_install_steam_link']";
+
+    private static final String DOWNLOAD_FILEPATH_KEY = "downloadFilePath";
+
+    Button btnDownload;
     public InstallPage() {
-        this.driver = getDriver();
+
     }
 
     public boolean isFullDownload() {
 
-        BaseElement baseElement = new BaseElement(driver);
-        String href =baseElement.findElement(locator).getAttribute("href");
+        btnDownload = new Button(By.xpath((LOCATOR)));
+        String href =  btnDownload.getAttribute("href");
         Properties properties = getProperties();
-        String filePath = properties.getProperty("downloadFilePath");
+        String filePath = properties.getProperty(DOWNLOAD_FILEPATH_KEY);
         CommonFunctions commonFunctions = new CommonFunctions();
         HttpUtils utils = new HttpUtils();
-        long size=utils.getSizeOfContent(href, filePath);
-        return commonFunctions.isFullDownLoad(filePath,size);
-
+        long size = utils.getSizeOfContent(href, filePath);
+        return commonFunctions.isFullDownLoad(filePath, size);
 
 
     }

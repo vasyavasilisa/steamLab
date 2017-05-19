@@ -3,13 +3,10 @@ package framework;
 import org.openqa.selenium.*;
 
 
-
 import java.util.List;
 
-/**
- * Created by v.demyanova on 5/15/17.
- */
-public  class BaseElement{
+
+public abstract class BaseElement extends BaseEntity {
 
 
     WebDriver driver;
@@ -18,27 +15,24 @@ public  class BaseElement{
 
     }
 
+    public abstract void click();
 
-    public BaseElement(WebDriver driver) {
-this.driver=driver;
-    }
+    public abstract String getText();
 
+    public abstract String getAttribute(String str);
 
+    public abstract void moveTo();
 
     public List<WebElement> findElements(String by) {
-        List<WebElement> list = (driver.findElements(By.xpath(by)));
-        return list;
+        return getDriver().findElements(By.xpath(by));
+
     }
 
 
-    public  void click(){
+    public WebElement findElement(By locator) {
 
-    };
-
-    public WebElement findElement(String by) {
-        return driver.findElement(By.xpath(by));
+        return getDriver().findElement(locator);
     }
-
 
 
 }

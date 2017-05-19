@@ -1,7 +1,8 @@
 package steam.tests;
 
+import framework.BaseEntity;
 import framework.BrowserFactory;
-import framework.Menu;
+import steam.Menu.Menu;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
@@ -16,6 +17,7 @@ import java.util.Properties;
 
 public class SteamTest {
     WebDriver driver;
+    BaseEntity baseEntity;
 
     @BeforeTest
     public void setUp() {
@@ -25,9 +27,10 @@ public class SteamTest {
         String br = properties.getProperty("brouser_type");
         driver = BrowserFactory.getMyDriver(br);
         String mainPage = properties.getProperty("main_page_url");
-        basePage.setDriver(driver);
+        basePage = new BasePage(driver);
         basePage.maximaseWindow();
         basePage.navigate(mainPage);
+        baseEntity = new BaseEntity();
     }
 
     @Test
@@ -41,16 +44,17 @@ public class SteamTest {
 
         ActionPage actionPage = new ActionPage();
         actionPage.clickOnSpecials();
+        List<String> list = actionPage.getDiscount();
 
-
-        List<String> list =  actionPage.getDiscount();
-        System.out.println(list.size());
         DescriptionPage descriptionPage = new DescriptionPage();
         descriptionPage.chooseAgeIfExist();
-        Assert.assertTrue(descriptionPage.isSimilarPriceDiscount(list));
+
+
+        baseEntity.assertTrue(descriptionPage.isSimilarPriceDiscount(list));
         descriptionPage.clickOnInstall();
+
         InstallPage installPage = new InstallPage();
-        Assert.assertTrue(installPage.isFullDownload());
+        baseEntity.assertTrue(installPage.isFullDownload());
 
 
     }

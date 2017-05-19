@@ -1,21 +1,17 @@
 package steam.forms;
 
 
-import framework.BaseElement;
-import framework.BrowserFactory;
-import framework.Button;
-import framework.Select;
-import framework.exceptions.ElementNotFoundException;
-import framework.exceptions.OutOfTimeException;
+import framework.*;
 import framework.services.CommonFunctions;
 import org.openqa.selenium.*;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
+import java.util.NoSuchElementException;
 
 
 public class DescriptionPage extends BasePage {
-    WebDriver driver;
+
     Select daySelect;
     Select concreteDaySelect;
     Select monthSelect;
@@ -24,6 +20,8 @@ public class DescriptionPage extends BasePage {
     Select concreteYearSelect;
     Button buttonEnter;
     Button buttonInstall;
+    Label discountLabel;
+    Label priceLabel;
 
 
     String daySelectLocatorKey = "daySelectLocator";
@@ -41,40 +39,39 @@ public class DescriptionPage extends BasePage {
 
 
     public DescriptionPage() {
-        this.driver = getDriver();
+
     }
 
     public void chooseAgeIfExist() {
 
         Properties locatorProperties = getLocatorProperties();
         BrowserFactory.waitWithIgnoring();
-        BaseElement baseElement = new BaseElement(driver);
         try {
 
             BrowserFactory.waitElementsExplicide(locatorProperties.getProperty(daySelectLocatorKey));
-            daySelect = new Select(baseElement.findElement(locatorProperties.getProperty(daySelectLocatorKey)), driver);
+            daySelect = new Select(By.xpath(locatorProperties.getProperty(daySelectLocatorKey)));
             daySelect.click();
             daySelect.click();
 
-            concreteDaySelect = new Select(baseElement.findElement(locatorProperties.getProperty(dayOptionLocatorKey)), driver);
+            concreteDaySelect = new Select(By.xpath(locatorProperties.getProperty(dayOptionLocatorKey)));
             concreteDaySelect.click();
 
            BrowserFactory.waitElementsExplicide(locatorProperties.getProperty(monthSelectLocatorKey));
 
-            monthSelect = new Select(baseElement.findElement(locatorProperties.getProperty(monthSelectLocatorKey)), driver);
+            monthSelect = new Select(By.xpath(locatorProperties.getProperty(monthSelectLocatorKey)));
             monthSelect.click();
             monthSelect.click();
 
-            concreteMonthSelect = new Select(baseElement.findElement(locatorProperties.getProperty(monthOptionLocatorKey)), driver);
+            concreteMonthSelect = new Select(By.xpath(locatorProperties.getProperty(monthOptionLocatorKey)));
             concreteMonthSelect.click();
 
 
-            yearSelect = new Select(baseElement.findElement(locatorProperties.getProperty(yearSelectLocatorKey)), driver);
+            yearSelect = new Select(By.xpath(locatorProperties.getProperty(yearSelectLocatorKey)));
             yearSelect.click();
             yearSelect.click();
 
             BrowserFactory.waitElementsExplicide(locatorProperties.getProperty(yearSelectLocatorKey));
-            concreteYearSelect = new Select(baseElement.findElement(locatorProperties.getProperty(yearOptionLocatorKey)), driver);
+            concreteYearSelect = new Select(By.xpath(locatorProperties.getProperty(yearOptionLocatorKey)));
             concreteYearSelect.click();
             CommonFunctions commonFunctions= new CommonFunctions();
             String lang=getProperties().getProperty("language");
@@ -86,13 +83,13 @@ public class DescriptionPage extends BasePage {
             prop=new String (prop.getBytes("ISO-8859-1"), "UTF-8");
             String locator=new String(String.format(locatorProperties.getProperty(enterButtonLocatorKey),prop));
 
-            buttonEnter = new Button(baseElement.findElement(locator), driver);
+            buttonEnter = new Button(By.xpath(locator));
             buttonEnter.click();
 
 
-        } catch (OutOfTimeException e) {
+        } catch (TimeoutException e) {
 
-        } catch (ElementNotFoundException e) {
+        } catch (NoSuchElementException e) {
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -103,24 +100,23 @@ public class DescriptionPage extends BasePage {
     public boolean isSimilarPriceDiscount(List<String> list) {
         Properties locatorProperties = getLocatorProperties();
         BrowserFactory.waitElementsExplicide(locatorProperties.getProperty(discountLocator2Key));
-        BaseElement baseElement = new BaseElement(driver);
-        String discount = baseElement.findElement(locatorProperties.getProperty(discountLocator2Key)).getText();
-        String price = baseElement.findElement(locatorProperties.getProperty(finalPriceLocatorKey)).getText();
+        discountLabel = new Label(By.xpath(locatorProperties.getProperty(discountLocator2Key)));
+        priceLabel = new Label(By.xpath(locatorProperties.getProperty(finalPriceLocatorKey)));
         List<String> new_requisites = new ArrayList<>();
-        new_requisites.add(discount);
-        new_requisites.add(price.split(" ")[0]);
+        new_requisites.add(discountLabel.getText());
+        new_requisites.add(priceLabel.getText().split(" ")[0]);
 
         return list.equals(new_requisites);
 
 
     }
 
-    public void clickOnInstall() throws UnsupportedEncodingException {
-        BaseElement baseElement = new BaseElement(driver);
+    public void clickOnInstall()  {
+
         Properties locatorProperties = getLocatorProperties();
         BrowserFactory.waitElementsExplicide(locatorProperties.getProperty(installButtonLocatorKey));
         String str = new String(locatorProperties.getProperty(installButtonLocatorKey));
-        buttonInstall = new Button(baseElement.findElement(str), driver);
+        buttonInstall = new Button(By.xpath(str));
         buttonInstall.click();
     }
 }

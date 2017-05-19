@@ -5,16 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -49,8 +44,6 @@ public static WebDriver getMyDriver(String type){
 
     }
 
-
-
     throw new RuntimeException();
 }
 
@@ -84,6 +77,7 @@ public static void initProperties(){
             refresh();
 
         }
+
 
     }
 
@@ -127,6 +121,15 @@ public static void initProperties(){
 
     public static Long getTimeForLoadElement(){
         return Long.parseLong(properties.getProperty("timeout"));
+
+    }
+
+    public static void waitPageToLoad(){
+        try {
+            Thread.sleep(getTimeForLoadPage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 

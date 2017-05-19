@@ -1,8 +1,12 @@
 package framework.services;
 
+import framework.BaseElement;
+import framework.Label;
 import org.openqa.selenium.WebElement;
+
 import java.io.*;
 import java.util.*;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,10 +33,10 @@ public class CommonFunctions {
         return property;
     }
 
-    public List<Integer> getListOfDiscounts(List<WebElement> list){
+    public List<Integer> getListOfDiscounts(List<Label> list){
         List<Integer> discounts = new ArrayList<>();
         Pattern pat = Pattern.compile("[0-9]+");
-        for (WebElement el : list) {
+        for (Label el : list) {
             Matcher matcher = pat.matcher(el.getText());
             while (matcher.find()) {
                 discounts.add(new Integer(matcher.group()));

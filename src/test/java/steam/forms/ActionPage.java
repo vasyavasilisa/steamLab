@@ -1,66 +1,60 @@
 package steam.forms;
 
-import framework.BaseElement;
-import framework.BrowserFactory;
-import framework.Image;
-import framework.Tab;
+import framework.*;
 import framework.services.CommonFunctions;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 
-public class ActionPage extends BasePage{
-    WebDriver driver;
-    Image imageWithMaxDiscount;
+public class ActionPage extends BasePage {
+    Image imgWithMaxDiscount;
+    Button btnSpecialsTab;
     String discountLocatorKey = "discountLocator";
     String imageLocatorKey = "imageLocator";
     String priceLabelLocatorKey = "priceLabelLocator";
     String specialsLocatorKey = "specialsLocator";
-    Tab tab;
+
 
     public ActionPage() {
-        this.driver = getDriver();
     }
 
-    public void clickOnSpecials(){
-        Properties locatorProperties=getLocatorProperties();
-        BaseElement baseElement = new BaseElement(driver);
+    public void clickOnSpecials() {
+        Properties locatorProperties = getLocatorProperties();
         BrowserFactory.waitElementExplicide(locatorProperties.getProperty(specialsLocatorKey));
-        tab=new Tab(baseElement.findElement(locatorProperties.getProperty(specialsLocatorKey)),driver);
-        tab.click();
+        btnSpecialsTab = new Button(By.xpath(locatorProperties.getProperty(specialsLocatorKey)));
+        btnSpecialsTab.click();
 
     }
 
     public List getDiscount() {
         Properties locatorProperties = getLocatorProperties();
+        BrowserFactory.waitPageToLoad();
+        BrowserFactory.waitJavascript();
         BrowserFactory.waitJavascript();
 
-        BrowserFactory.waitJavascript();
 
-
-        BaseElement baseElement = new BaseElement(driver);
         CommonFunctions commonFunctions = new CommonFunctions();
-        List<WebElement> list = baseElement.findElements(locatorProperties.getProperty(discountLocatorKey));
+        Label label1 = new Label();
+        List<Label> list = label1.getConvertedElements(locatorProperties.getProperty(discountLocatorKey));
         List<Integer> discounts = commonFunctions.getListOfDiscounts(list);
-        System.out.println(list.size());
-
-
         int maxInd = commonFunctions.getIndMaxDiscount(discounts);
 
-        System.out.println(maxInd);
         List<String> ldiscount_price = new ArrayList<>();
 
-        ldiscount_price.add(baseElement.findElements(locatorProperties.getProperty(discountLocatorKey)).get(maxInd).getText());
-        ldiscount_price.add(baseElement.findElements(locatorProperties.getProperty(priceLabelLocatorKey)).get(maxInd).getText());
-
-
-        imageWithMaxDiscount = new Image(baseElement.findElements(locatorProperties.getProperty(imageLocatorKey)).get(maxInd), driver);
-
-        imageWithMaxDiscount.click();
+        List<Label> l = label1.getConvertedElements(locatorProperties.getProperty(discountLocatorKey));
+        List<Label> l2 = label1.getConvertedElements(locatorProperties.getProperty(priceLabelLocatorKey));
+        Label labelDiscount = label1.findElementByInd(l, maxInd);
+        Label labelPrice = label1.findElementByInd(l2, maxInd);
+        ldiscount_price.add(labelDiscount.getText());
+        ldiscount_price.add(labelPrice.getText());
+        Image image = new Image();
+        List<Image> gameImages = image.getConvertedElements(locatorProperties.getProperty(imageLocatorKey));
+        imgWithMaxDiscount = image.findElementByInd(gameImages, maxInd);
+        imgWithMaxDiscount.click();
         return ldiscount_price;
+
     }
 }

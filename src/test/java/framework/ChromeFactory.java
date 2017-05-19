@@ -3,11 +3,8 @@ package framework;
 import framework.services.CommonFunctions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-/**
- * Created by USER on 09.05.2017.
- */
+
 public class ChromeFactory extends BrowserFactory {
 
     private static final String CHROME_DRIVER_NAME= "webdriver.chrome.driver";
@@ -23,7 +20,7 @@ public class ChromeFactory extends BrowserFactory {
         if (instance == null)
             instance = new ChromeFactory();
         if(driver==null) {
-            driver = new ChromeDriver(/*options*//*profile*/);
+            driver = new ChromeDriver();
         }
         return driver;
 

@@ -1,15 +1,27 @@
 package framework;
 
 
-import org.testng.annotations.BeforeClass;
+import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
 
-/**
- * Created by v.demyanova on 5/15/17.
- */
-public abstract class BaseEntity {
+public  class BaseEntity {
 
-    @BeforeClass
-    public void before(){
+   private static WebDriver driver;
+
+    public BaseEntity() {
+
+    }
+
+    public BaseEntity(WebDriver driver1) {
+        driver = driver1;
+    }
+
+    public  WebDriver getDriver() {
+        return driver;
+    }
+
+    public void assertTrue(boolean isTrue){
+        Assert.assertTrue(isTrue);
 
     }
 }
